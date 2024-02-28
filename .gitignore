@@ -17,3 +17,11 @@ baserom/*
 
 # Keep .gitkeep
 !**/.gitkeep
+
+objdiff.json
+
+build.ninja
+.ninja_deps
+.ninja_log
+
+__pycache__/
