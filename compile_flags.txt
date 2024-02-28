@@ -1,0 +1,6 @@
+-xc
+--target=ppc32-none-eabi
+-nostdinc
+-Iinclude
+-Wall
+-Wextra
