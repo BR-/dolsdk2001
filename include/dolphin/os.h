@@ -47,6 +47,17 @@ u32 OSGetConsoleSimulatedMemSize(void);
 #define OS_BASE_CACHED (OS_CACHED_REGION_PREFIX << 16)
 #define OS_BASE_UNCACHED (OS_UNCACHED_REGION_PREFIX << 16)
 
+#ifdef M2CTX
+u32 __OSPhysicalMemSize;
+volatile int __OSTVMode;
+OSThread *__gUnkThread1;
+OSThreadQueue __OSActiveThreadQueue;
+OSThread *__gCurrentThread;
+u32 __OSSimulatedMemSize;
+u32 __OSBusClock;
+u32 __OSCoreClock;
+unsigned int __gUnknown800030C0[2];
+#else
 #ifdef __MWERKS__
 u32 __OSPhysicalMemSize   : (OS_BASE_CACHED | 0x0028);
 volatile int __OSTVMode : (OS_BASE_CACHED | 0x00CC);
@@ -60,6 +71,7 @@ unsigned int __gUnknown800030C0[2] : (OS_BASE_CACHED | 0x30C0);
 #else
 #define __OSBusClock  (*(u32 *)(OS_BASE_CACHED | 0x00F8))
 #define __OSCoreClock (*(u32 *)(OS_BASE_CACHED | 0x00FC))
+#endif
 #endif
 #define OS_BUS_CLOCK   __OSBusClock
 #define OS_CORE_CLOCK  __OSCoreClock
