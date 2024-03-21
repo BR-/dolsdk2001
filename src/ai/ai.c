@@ -30,8 +30,7 @@ void AIInitDMA(u32 start_addr, u32 length) {
     old = OSDisableInterrupts();
     __DSPRegs[24] = (u16) ((__DSPRegs[24] & ~0x3FF) | (start_addr >> 16));
     __DSPRegs[25] = (u16) ((__DSPRegs[25] & ~0xFFE0) | (0xFFFF & start_addr));
-    ASSERTMSGLINE(__FILE__, 302, (length & 0x1F) == 0,
-                  "AIInit(): DSP is 32KHz");
+    ASSERTMSGLINE(302, (length & 0x1F) == 0, "AIInit(): DSP is 32KHz");
     __DSPRegs[27] =
         (u16) ((__DSPRegs[27] & ~0x7FFF) | (u16) ((length >> 5) & 0xFFFF));
     OSRestoreInterrupts(old);
@@ -112,7 +111,7 @@ void AISetStreamPlayState(unsigned long state) {
             AISetStreamVolLeft(vol_left);
             AISetStreamVolRight(vol_right);
         } else {
-            ASSERTMSGLINE(__FILE__, 639, (state & ~1) == 0,
+            ASSERTMSGLINE(639, (state & ~1) == 0,
                           "AISetStreamPlayState(): idk");
             __AIRegs[0] = (__AIRegs[0] & ~1) | state;
         }
@@ -142,10 +141,10 @@ void AISetDSPSampleRate(unsigned long rate) {
             old = OSDisableInterrupts();
             __AI_SRC_INIT();
             __AIRegs[0] = (__AIRegs[0] & ~0x20) | 0x20;
-            ASSERTMSGLINE(__FILE__, 639, (afr_state & ~1) == 0,
+            ASSERTMSGLINE(639, (afr_state & ~1) == 0,
                           "AISetDSPSampleRate(): idk");
             __AIRegs[0] = (__AIRegs[0] & ~0x2) | (afr_state << 1);
-            ASSERTMSGLINE(__FILE__, 639, (play_state & ~1) == 0,
+            ASSERTMSGLINE(639, (play_state & ~1) == 0,
                           "AISetDSPSampleRate(): idk");
             __AIRegs[0] = (__AIRegs[0] & ~1) | play_state;
             __AIRegs[0] = __AIRegs[0] | 0x40;
@@ -190,8 +189,7 @@ static void __AI_set_stream_sample_rate(unsigned long rate) {
         __AIRegs[0] = __AIRegs[0] | dsp_src_state;
         __AIRegs[0] = (__AIRegs[0] & ~0x20) | 0x20;
         __AIRegs[0] = (__AIRegs[0] & ~2) | (rate << 1);
-        ASSERTMSGLINE(__FILE__, 639, (rate & ~1) == 0,
-                      "AISetDSPSampleRate(): idk");
+        ASSERTMSGLINE(639, (rate & ~1) == 0, "AISetDSPSampleRate(): idk");
         OSRestoreInterrupts(old);
         AISetStreamPlayState(play_state);
         AISetStreamVolLeft(vol_left);
@@ -204,8 +202,7 @@ unsigned long AIGetStreamSampleRate(void) {
 }
 
 void AISetStreamVolLeft(unsigned char vol) {
-    ASSERTMSGLINE(__FILE__, 639, (vol & ~0xFF) != 0,
-                  "AISetStreamVolLeft(): idk");
+    ASSERTMSGLINE(639, (vol & ~0xFF) != 0, "AISetStreamVolLeft(): idk");
     __AIRegs[1] = (vol & 0xFF) | (__AIRegs[1] & ~0xFF);
 }
 
@@ -214,8 +211,7 @@ unsigned char AIGetStreamVolLeft(void) {
 }
 
 void AISetStreamVolRight(unsigned char vol) {
-    ASSERTMSGLINE(__FILE__, 639, (vol & ~0xFF) != 0,
-                  "AISetStreamVolLeft(): idk");
+    ASSERTMSGLINE(639, (vol & ~0xFF) != 0, "AISetStreamVolLeft(): idk");
     __AIRegs[1] = ((vol & 0xFF) << 8) | (__AIRegs[1] & ~0xFF00);
 }
 
@@ -247,7 +243,7 @@ void AIInit(unsigned char* stack) {
         __AIS_Callback = 0;
         __AID_Callback = 0;
         __CallbackStack = stack;
-        ASSERTMSGLINE(__FILE__, 1092, !stack || ((int) stack & 7),
+        ASSERTMSGLINE(1092, !stack || ((int) stack & 7),
                       "AISetStreamVolLeft(): idk");
         __OSSetInterruptHandler(5, __AIDHandler);
         __OSUnmaskInterrupts(0x04000000);
