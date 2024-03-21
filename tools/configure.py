@@ -133,4 +133,4 @@ objdiff = {
 	"units": tus,
 }
 with open("objdiff.json", "w") as fh:
-	json.dump(objdiff, fh)
+	json.dump(objdiff, fh, indent=2)
