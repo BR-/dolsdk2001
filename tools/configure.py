@@ -14,18 +14,17 @@ n.variable("charflags", "-char unsigned")
 n.variable("cflags", '-nodefaults -proc gekko -fp hard -Cpp_exceptions off -enum int -warn pragmas -pragma "cats off"')
 n.variable("debugflags", "-opt level=0 -inline off -schedule off -sym on -DDEBUG")
 n.variable("releaseflags", "-O4,p -inline auto -DRELEASE")
-n.variable("includes", "-I- -Iinclude -ir src")
+n.variable("includes", "-I- -Iinclude -Iinclude/libc -ir src")
 n.variable("asflags", "-mgekko -I src -I include")
 n.newline()
 
 n.rule(
 	name="download_dtk",
-	command="python tools\download_dtk.py $in $out",
+	command="python tools\download_dtk.py dtk $out --tag v0.7.4",
 )
 n.build(
 	outputs="tools/dtk.exe",
 	rule="download_dtk",
-	inputs="tools/dtk_version",
 )
 n.newline()
 
