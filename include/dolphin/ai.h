@@ -4,12 +4,12 @@
 #include <dolphin/types.h>
 
 typedef void (*AISCallback)(u32 count);
-typedef void (*AIDCallback)();
+typedef void (*AIDCallback)(void);
 
 AIDCallback AIRegisterDMACallback(AIDCallback);
 void AIInitDMA(u32 start_addr, u32 length);
 void AIStartDMA(void);
-AIDCallback AIRegisterStreamCallback(AIDCallback);
+AISCallback AIRegisterStreamCallback(AISCallback);
 u32 AIGetStreamSampleCount(void);
 void AIResetStreamSampleCount(void);
 void AISetStreamPlayState(u32 state);
